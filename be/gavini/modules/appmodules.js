@@ -12,7 +12,7 @@ class Module {
             Module.logger = new Logger(config).getInstance();
 
 
-            Module.db = new Db(config, logger).getInstance();
+            Module.db = new Db(Module.config, Module.logger).getInstance();
             
 
             Module.init = true;

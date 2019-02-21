@@ -4,6 +4,7 @@ class Singleton {
     
     constructor(config, logger) {
         if(!Singleton.instance) {
+            logger.info("Initiating the DB connection");
 
             const options = {
                 useNewUrlParser: true,
@@ -20,17 +21,19 @@ class Singleton {
 
             let dbHostString = config.get('db.host');
             let dbPort = config.get('db.port');
-            let dbName = config.get('db.name');
+            let dbName = config.get('db.dbName');
 
             let dbConnectionString = `mongodb://${dbHostString}:${dbPort}/${dbName}`
 
+            logger.info(dbConnectionString);
 
             Singleton.instance = new mongoose.connect(dbConnectionString, options).then(
                 (res) => {
                     logger.log({
                         level: 'info',
                         message: res
-                    })
+                    });
+                    require('../models/dbSchema');
                 },
                 err => {
                     logger.log({

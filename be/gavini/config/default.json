@@ -2,6 +2,6 @@
     "db": {
         "host": "localhost",
         "port": 22112,
-        "dbName": ""
+        "dbName": "gavini"
     }
 }
