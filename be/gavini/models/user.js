@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var crypto = require('crypto');
 const jwt = require('jsonwebtoken');
+var address = require('./address');
 
 var userSchema = mongoose.Schema({
     uname: String,
@@ -11,10 +12,8 @@ var userSchema = mongoose.Schema({
     mobile: Number,
     hash: String,
     salt: String,
-    token: String,
-    expiry_token: Date,
-    session: String,
-    admin: Boolean
+    admin: Boolean,
+    address: [address.schema]
 });
 
 userSchema.methods.setPassword = function(password) {
