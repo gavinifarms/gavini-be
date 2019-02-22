@@ -31,13 +31,22 @@ userSchema.methods.generateJWT = function() {
     const today = new Date();
     const expirationDate = new Date(today);
     expirationDate.setDate(today.getDate() + 60);
-  
+
     return jwt.sign({
       email: this.email,
       id: this._id,
+      permissions: this.getPermission(),
       exp: parseInt(expirationDate.getTime() / 1000, 10),
     }, 'secret');
 };
+
+userSchema.methods.getPermission = function() {
+  let scope = ['user']
+  if(this.admin) {
+    scope.push('admin');
+  }
+  return scope;
+}
 
 userSchema.methods.signout = function() {
   this.session = "signOut"

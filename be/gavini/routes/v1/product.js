@@ -1,15 +1,17 @@
 var express = require('express');
 var router = express.Router();
 var auth = require('./auth');
+var guard = require('express-jwt-permissions')();
 
 var Product = require('../../models/product');
 
-router.use(function(req, res, next) {
+checkAdmin = (req, res, next) => {
     console.log(req.body);
+    // check if logggedin user is admin.
     next();
-});
+};
 
-router.post('/create', auth.required, (req, res, next) => {
+router.post('/create', auth.admin, (req, res, next) => {
     // console.log(req);
 
     let product = new Product({...req.body});
